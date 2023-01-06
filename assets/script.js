@@ -1,4 +1,5 @@
 var startBtnEl = document.getElementById('startBtn');
+var nextBtnEl = document.getElementById('nextBtn');
 var timerEl = document.getElementById('timer');
 var constainerEl = document.getElementById('questionContainer');
 var questionsEl = document.getElementById('question');
@@ -24,8 +25,12 @@ function countdown() {
   }
 
 startBtnEl.addEventListener("click", startGame)
+nextBtnEl.addEventListener('click', ()=>{
+    currentPrompt++;
+    setPrompt();
+})
 
- function startGame(){
+function startGame(){
     startBtnEl.style.display = "none";
     constainerEl.classList.remove('hide');
     shufflePrompt = questions.sort(()=> Math.random() - .5);
@@ -54,6 +59,7 @@ function nextPrompt(question){
 }
 
 function reset(){
+    nextBtnEl.classList.add('hide');
     while (answersEl.firstChild){
         answersEl.removeChild(answersEl.firstChild)
     }
@@ -62,18 +68,25 @@ function reset(){
 function selectAnswer(e){
     const selectedAnswer = e.target
     const correct = selectedAnswer.dataset.correct
-    statusClass(document.body.children)
+    statusClass(document.body, correct)
     Array.from(answersEl.children).forEach(button =>{
-        statusClass(button.dataset.correct)
+        statusClass(button, button.dataset.correct)
     })
+    nextBtnEl.classList.remove('hide');
+    if (shufflePrompt.length > currentPrompt +1){
+        nextBtnEl.classList.remove('hide');
+    } else {
+        nextBtnEl.innerText ="Again?";
+        nextBtnEl.classList.remove('hide');
+    }
 }
 
 function statusClass(element,correct){
-    clearStatusClass(element)
+    clearStatusClass(element);
     if (correct){
-        element.classList.add('correct')
+        element.classList.add('correct');
     } else {
-        element.classList.add('wrong')
+        element.classList.add('wrong');
     }
 }
 
@@ -133,7 +146,7 @@ const questions = [
         answer: [
             {text:"cutting up a snippit of code",correct: false},
             {text:"copying code", correct: false},
-            {text:"cleaning up code", correct: false},
+            {text:"cleaning up code", correct: true},
             {text:"delete code", correct: false}
         ]
     },
