@@ -1,6 +1,6 @@
 var startBtnEl = document.getElementById('startBtn');
 var timerEl = document.getElementById('timer');
-var constainerEl = document.getElementById('container');
+var constainerEl = document.getElementById('questionContainer');
 var questionsEl = document.getElementById('question');
 var answersEl = document.getElementById('answers')
 let shufflePrompt;
@@ -27,8 +27,8 @@ startBtnEl.addEventListener("click", startGame)
 
  function startGame(){
     startBtnEl.style.display = "none";
-    //constainerEl.classList.remove('hide');
-    shufflePrompt = questions.sort(()=>Math.random - .5);
+    constainerEl.classList.remove('hide');
+    shufflePrompt = questions.sort(()=> Math.random() - .5);
     currentPrompt = 0
     countdown();
     setPrompt();
@@ -78,8 +78,8 @@ function statusClass(element,correct){
 }
 
 function clearStatusClass(element){
-    element.classList.add('correct')
-    element.classList.add('wrong')
+    element.classList.remove('correct')
+    element.classList.remove('wrong')
 }
 
 const questions = [
