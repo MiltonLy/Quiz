@@ -1,31 +1,22 @@
 var startBtnEl = document.getElementById('startBtn');
-var timer = document.getElementById('timer');
-var question = document.getElementById('question');
-
-var qQuestion = document.createElement("p") 
-var qA1 = document.createElement("button");
-var qA2 = document.createElement("button");
-var qA3 = document.createElement("button");
-var qA4 = document.createElement("button");
-
-question.appendChild(qQuestion);
-qQuestion.appendChild(qA1);
-qQuestion.appendChild(qA2);
-qQuestion.appendChild(qA3);
-qQuestion.appendChild(qA4);
+var timerEl = document.getElementById('timer');
+var questionsEl = document.getElementById('question');
+var answersEl = document.getElementById('answers')
+var shufflePrompt;
+var currentPrompt;
 
 function countdown() {
     var timeLeft = 75;
   
     var timeInterval = setInterval(function () {
       if (timeLeft > 1) {
-        timer.textContent = timeLeft + " ";
+        timerEl.textContent = timeLeft + " ";
         timeLeft--;
       } else if (timeLeft === 1) {
-        timer.textContent = timeLeft + ' '
+        timerEl.textContent = timeLeft + ' '
         timeLeft--;
       } else {
-        timer.textContent = '';
+        timerEl.textContent = '';
         clearInterval(timeInterval);
       }
     }, 1000);
@@ -33,24 +24,27 @@ function countdown() {
 
 startBtnEl.addEventListener("click", function(){
     startBtnEl.style.display = "none" 
+    shufflePrompt = prompts.sort(()=>Math.random - .5);
+    currentPrompt = 0
     countdown();
-    prompt1();
 })
 
-function prompt1 (){
-    var q1Question = qQuestion
-    var q1A1 = qA1
-    var q1A2 = qA2
-    var q1A3 = qA3
-    var q1A4 = qA4
+var prompts = [
+    {
+        question: "Where do you modify the background color on the page?",
+        answer: [
+            {text:"html", correct: false},
+            {text:"css", correct: true},
+            {text:"javascript", correct: false},
+            {text:"jquery", correct: false},
+        ]
+    }
+]
 
-    q1Question.textContent = "Where do you modify the background color on the page?";
-    q1A1.textContent = "css";
-    q1A2.textContent = "html";
-    q1A3.textContent = "javascript";
-    q1A4.textContent = "node";
+function nextPrompt(){
+    nextQuestion(shufflePrompt[currentPrompt])
 }
 
-function prompt2(){
+function nextQuestion(){
 
 }
